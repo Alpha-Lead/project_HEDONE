@@ -7,8 +7,7 @@ import pandas #To work with dataframes
 import os #Used to get directory fro python script
 
 #Custom function import
-from strManipulators import simpleString, simpleSpace
-from redditSetup import initReddit, countPosts
+from code_common import *
 
 #########################################################################
 ##                      Pull data from Reddit                          ##
@@ -18,7 +17,7 @@ from redditSetup import initReddit, countPosts
 reddit = initReddit()
 
 #Ask user for input of target name
-redditorName = raw_input("Reddit user: u/") #tested with mrCate, Btothensfw, andrewgylb, AcidicSeaYak
+redditorName = raw_input("Reddit user: u/")
 
 #Count total number of posts
 print("Counting "+redditorName+"'s posts...")
