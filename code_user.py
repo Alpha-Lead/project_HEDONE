@@ -17,7 +17,7 @@ from code_common import *
 reddit = initReddit()
 
 #Ask user for input of target name
-redditorName = raw_input("Reddit user: u/") #tested with mrCate, Btothensfw, andrewgylb, AcidicSeaYak
+redditorName = raw_input("Reddit user: u/")
 
 #Count total number of posts
 print("Counting "+redditorName+"'s posts...")
