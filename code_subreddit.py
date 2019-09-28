@@ -47,15 +47,23 @@ print("\n\n----------\n\n")
 ##                          Download Images                            ##
 #########################################################################
 
-#Initialise variables
-#varURL = "no_url_entered"
-#varFilename = "local_filename.jpg"
+#Ask if user want's to download found files
+while True:
+   answer = input('Do you want to contiue to download phase? [y/n]:')
+   if answer.lower().startswith("y"):
+      break
+   elif answer.lower().startswith("n"):
+        print("Exiting on user request...")
+        exit()
 
-#Set values for download
+outputFilePath = buildOutputDir('output files', subredditName)
 
-#Download file from url and name
-#urllib.urlretrieve(varURL, varFilename)
-
+for i in range(0, len(foundDF.index)):
+    downloadFile(
+                 outputFilePath, #Filepath
+                 foundDF.at[i, 'filename'], #Filename
+                 foundDF.at[i, 'extension'], #File extension
+                 foundDF.at[i, 'url']) #File location URL
 
 
 
