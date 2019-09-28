@@ -6,7 +6,7 @@ import pandas #To work with dataframes
 import os #Used to get directory fro python script
 
 #Custom function import
-from code_common import *
+from code_common import initReddit, countPosts, simpleString, simpleSpace, downloadFile, buildOutputDir 
 
 #########################################################################
 ##                      Pull data from Reddit                          ##
@@ -41,6 +41,12 @@ if searchLimit >0:
 else:
     newPosts = redditUsr.submissions.new()
 
+
+
+#########################################################################
+##                       Transform list data                           ##
+#########################################################################
+
 #Get items from list, export into pandas dataframe object
 postsDF = pandas.DataFrame({"title":[], "body":[], "date":[], "url":[], "subreddit":[]})
 for submission in newPosts:
@@ -69,10 +75,6 @@ for i in range(0, len(postsDF.index)):
 print(foundDF)
 print(postsDF) #Whole list, output will crop to only show index & url
 print(postsDF.loc[0]) #Row 1
-
-###Print Attributes of objects (used for debugging))
-##print(dir(redditUsr))
-##print(dir(newPosts))
 
 
 #########################################################################
