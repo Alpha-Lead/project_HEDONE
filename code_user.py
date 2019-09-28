@@ -79,7 +79,7 @@ print(postsDF.loc[0]) #Row 1
 ##                          Download Images                            ##
 #########################################################################
 
-#Ask if user want's to download found files #### NEED TO CODE ####
+#Ask if user want's to download found files
 while True:
    answer = input('Do you want to contiue to download phase? [y/n]:')
    if answer.lower().startswith("y"):
