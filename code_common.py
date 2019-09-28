@@ -1,5 +1,7 @@
 import praw #PythonRedditApiWrapper
 import re #Regular Expressions (RegEx)
+import os #Used to interact with filesystem
+import urllib.request #Library to download image
 from credentials import * #Import reddit app access credentials
 
 ##Function to initialise PRAW instance
@@ -23,8 +25,8 @@ def countPosts(inputName, inputType):
         listPost = list(subreddit.submissions.new(limit=None))
         count = len(listPost)
     else:
-        print "EXCEPTION_THROWN - SECTION_count"
-        print "Invalid inputType value. Expected: [u, r]. Recieved: " + inputType
+        print ("EXCEPTION_THROWN - SECTION_count")
+        print ("Invalid inputType value. Expected: [u, r]. Recieved: " + inputType)
 
     return count
 
@@ -41,3 +43,42 @@ def simpleSpace(inputString):
     inputString = re.sub(' +', ' ',inputString)
     return inputString
     
+#Function to download file to path
+def downloadFile(filepath, filename, filetype, url):
+    #Check if file already exists
+    if os.path.isfile(filepath):
+            print("Skipped file download (exists): " + filename)
+    else:
+        #Download file from url and name
+        try:
+            urllib.request.urlretrieve(url, filename=(filepath+filename+filetype))
+            print("File downloaded: " + filename)
+        except Exception as e:
+            print('EXCEPTION_THROWN - SECTION_download')
+            print(e)
+
+
+#Function to ensure downloaded file ouput directory exists
+def buildOutputDir(holderFolder, ouputFolder):
+    #Get path to file where python app is
+    basePath = os.path.dirname(os.path.realpath(__file__))
+
+    filepath = basePath + '\\' + holderFolder + '\\'
+    #Check if filepath already exists
+    if os.path.isdir(filepath):
+        print('Directory already exists: ' + filepath)
+    #Create filepath if it does not exist
+    else: 
+        print('Directory created: ' + filepath)
+        os.mkdir(filepath)
+
+    filepath += ouputFolder + '\\'
+    #Check if filepath already exists
+    if os.path.isdir(filepath):
+        print('Directory already exists: ' + filepath)
+    #Create filepath if it does not exist
+    else: 
+        print('Directory created: ' + filepath)
+        os.mkdir(filepath)
+
+    return filepath

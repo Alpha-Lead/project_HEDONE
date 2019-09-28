@@ -1,2 +1,5 @@
 credentials.py
 credentials.pyc
+__pycache__
+.vscode
+.gitignore

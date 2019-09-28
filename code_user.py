@@ -1,7 +1,6 @@
 #project_HEDONE
 #Import dependancies
 import praw #PythonRedditApiWrapper
-import urllib #Library to download image
 import datetime  #Work with Dates
 import pandas #To work with dataframes
 import os #Used to get directory fro python script
@@ -17,7 +16,7 @@ from code_common import *
 reddit = initReddit()
 
 #Ask user for input of target name
-redditorName = raw_input("Reddit user: u/")
+redditorName = input("Reddit user: u/")
 
 #Count total number of posts
 print("Counting "+redditorName+"'s posts...")
@@ -26,7 +25,7 @@ print ("Total number of posts found: " + str(ttlNumPosts))
 
 #Ask user to limit the number of posts to scan/download based of last download
 while True: #Loop until a valid number is given
-    lastPostNum = raw_input("Enter number of last downloaded post: ")
+    lastPostNum = input("Enter number of last downloaded post: ")
     if( lastPostNum.isdigit() ):
         #Set the search limit (reverse chronological due to 'new' ordering)
         searchLimit = ttlNumPosts - int(lastPostNum)
@@ -82,43 +81,20 @@ print(postsDF.loc[0]) #Row 1
 
 #Ask if user want's to download found files #### NEED TO CODE ####
 while True:
-   answer = raw_input('Do you want to contiue to download phase? [y/n]:')
+   answer = input('Do you want to contiue to download phase? [y/n]:')
    if answer.lower().startswith("y"):
       break
    elif answer.lower().startswith("n"):
         print("Exiting on user request...")
         exit()
 
-#Get path to file where python app is
-basePath = os.path.dirname(os.path.realpath(__file__))
-#Create folder for output from reddit user name
-folderPath = '\\redditRipper\\'+redditorName+'\\'
-
-#Create folder if it does not exist
-if os.path.isdir(basePath+folderPath):
-    print('Directory already exists:' + basePath+folderPath)
-else:
-    print('Directory created: '+ basePath+folderPath)
-    file = os.mkdir(basePath+folderPath)
+outputFilePath = buildOutputDir('output files', redditorName)
 
 for i in range(0, len(foundDF.index)):
-    try:
-        #Build filepath
-        filePath=basePath+folderPath
-        filePath+=foundDF.at[i, 'filename']
-        filePath+=foundDF.at[i, 'extension']
+    downloadFile(
+                 outputFilePath, #Filepath
+                 foundDF.at[i, 'filename'], #Filename
+                 foundDF.at[i, 'extension'], #File extension
+                 foundDF.at[i, 'url']) #File location URL
 
-        #Check if file already exists
-        if os.path.isfile(filePath):
-            print("Skipped file download (exists): " + foundDF.at[i, 'filename'])
-        else:
-            #Download file from url and name
-            urllib.urlretrieve(
-                foundDF.at[i, 'url'], 
-                filename=filePath)
-            print("File downloaded: " + foundDF.at[i, 'filename'])
-    except Exception as e:
-        print('EXCEPTION_THROWN - SECTION_download')
-        print(e)
-        #Write to errorLog instead #### NEED TO CODE ####
 
