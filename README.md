@@ -19,6 +19,8 @@ You can provide the list of user names, or subreddit names in one of 3 ways:
 
 3. Through a textfile
 
+**Before you start, you will need to create a credentials.py file.**
+See below for details.
 
 
 To get started, we will be running the _code_main.py_ script.
@@ -88,3 +90,21 @@ There are some rules about acceptable formatting:
 * Whitespace and tabs before an entry will be ignored.
 
 * File format must be plaintext parsable (I recommend .txt).
+
+### Creating the credentials.py file: ###
+
+This file is required for the 'Python Reddit Aplication Wrapper' to interface with reddit.
+
+This file should be created by you and placed within this directory.
+
+Here is the template:
+`#Details from Reddit 'App creation' page`
+`CLIENT_ID = 'AbCD123EfGH567'`
+`CLIENT_SECRET = '1234hash1234hash1234hash1234'`
+`#Reddit login credentials`
+`USER_NAME = 'UserName'`
+`USER_PASSWORD = 'password1234'`
+`#Used to identfy app (Firefox, Chrome, etc.)`
+`USER_AGENT = 'Hedone_v1'`
+
+The ClientId, and ClientSecret can be aquired by following the PRAW guide [here](https://praw.readthedocs.io/en/latest/getting_started/authentication.html#oauth)
