@@ -40,7 +40,7 @@ def countPosts(inputName, inputType):
         count = len(listPost)
     elif inputType == 'r': ### YET TO GET WORKING ###
         subreddit = reddit.subreddit(inputName)
-        listPost = list(subreddit.submissions.new(limit=None))
+        listPost = list(subreddit.new(limit=None))
         count = len(listPost)
     else:
         print ("EXCEPTION_THROWN - SECTION_count")
