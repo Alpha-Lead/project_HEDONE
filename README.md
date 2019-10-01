@@ -98,13 +98,15 @@ This file is required for the 'Python Reddit Aplication Wrapper' to interface wi
 This file should be created by you and placed within this directory.
 
 Here is the template:
-`#Details from Reddit 'App creation' page`
-`CLIENT_ID = 'AbCD123EfGH567'`
-`CLIENT_SECRET = '1234hash1234hash1234hash1234'`
-`#Reddit login credentials`
-`USER_NAME = 'UserName'`
-`USER_PASSWORD = 'password1234'`
-`#Used to identfy app (Firefox, Chrome, etc.)`
-`USER_AGENT = 'Hedone_v1'`
+
+    #Details from Reddit 'App creation' page
+    CLIENT_ID = 'AbCD123EfGH567'
+    CLIENT_SECRET = '1234hash1234hash1234hash1234'
+    #Reddit login credentials
+    USER_NAME = 'UserName'
+    USER_PASSWORD = 'password1234'
+    #Used to identfy app (Firefox, Chrome, etc.)
+    USER_AGENT = 'Hedone_v1'
+
 
 The ClientId, and ClientSecret can be aquired by following the PRAW guide [here](https://praw.readthedocs.io/en/latest/getting_started/authentication.html#oauth)
