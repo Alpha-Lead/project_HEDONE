@@ -79,16 +79,16 @@ To download media from file 'listOfTargets.txt'
 
 There are some rules about acceptable formatting:
 
-*There must only be one redditor username or subreddit name per line
+* There must only be one redditor username or subreddit name per line
 
-*Entries must be seperated by a newline character
+* Entries must be seperated by a newline character
 
-*Entries must be prefixed by 'u/' for redditors and 'r/' for subreddits.
+* Entries must be prefixed by 'u/' for redditors and 'r/' for subreddits.
 
-*Lines that are not to be read must have an '#' at the beginning.
+* Lines that are not to be read must have an '#' at the beginning.
 
-*There can be no blank lines.
+* There can be no blank lines.
 
-*Whitespace and tabs before an entry will be ignored.
+* Whitespace and tabs before an entry will be ignored.
 
-*File format must be plaintext parsable (I recommend .txt).
+* File format must be plaintext parsable (I recommend .txt).
