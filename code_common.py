@@ -20,7 +20,7 @@ def countPosts(inputName, inputType):
         user = reddit.redditor(inputName)
         listPost = list(user.submissions.new(limit=None))
         count = len(listPost)
-    elif inputType == 'r':
+    elif inputType == 'r': ### YET TO GET WORKING ###
         subreddit = reddit.subreddit(inputName)
         listPost = list(subreddit.submissions.new(limit=None))
         count = len(listPost)
