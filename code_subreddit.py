@@ -69,9 +69,10 @@ def code_subreddit(subredditName):
                 }, ignore_index=True)
 
     #Print dataframe contents for debuging
-    print(foundDF)
-    print(postsDF) #Whole list, output will crop to only show index & url
-    print(postsDF.loc[0]) #Row 1
+    #print(foundDF)
+    #print(postsDF) #Whole list, output will crop to only show index & url
+    #print(postsDF.loc[0]) #Row 1
+    print(str(len(foundDF.index))  + " valid media entries found.")
 
 
     #########################################################################
