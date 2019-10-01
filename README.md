@@ -2,6 +2,7 @@
 
 ## Scrape Reddit users for media ##
 
+For python 3 and above.
 
 ### User Guide: ###
 
