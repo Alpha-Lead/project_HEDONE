@@ -2,6 +2,8 @@
 #Import dependancies
 import sys #To handle passing in arguments
 import getopt #To handle argument parsing
+import os #Used to interact with filesystem
+import re #Used for regex expressions on strings
 
 from code_user import code_user #To operate on users
 from code_subreddit import code_subreddit #To operate on subreddits
@@ -25,14 +27,13 @@ def main(argv):
     for opt, arg in optns:
         if opt in ("-f", "/f", "--file"):
             ##Read file for inputs
-            #fileLocation = arg
-            print("Yet to implement file-read feature")
+            processFile(arg)
         elif opt in ("-u", "/u", "--user"):
             ##User: name provided
             code_user(arg) #Call code_user() and pass Redditor name
         elif opt in ("-s", "/s", "--subreddit"):
             ##Subreddit: name provided
-            code_subreddit(arg)
+            code_subreddit(arg) #Call code_subreddit() and pass Subreddit name
         elif opt in ("-h", "--help"):
             printHelp()
             sys.exit(0)
@@ -62,6 +63,45 @@ def alternate():
             print("To select a subreddit, try: r, r/, or subreddit.")
             print("To exit, try: e, c, exit, cancel.")
             print()
+    return
+
+def processFile(filename):
+    #Get path to file where python app is
+    basePath = os.path.dirname(os.path.realpath(__file__))
+
+    #Check if file  exists
+    if os.path.isfile(basePath + '\\' + filename):
+        print("Reading from file " + filename)
+        lineList = list()
+        lineList = [line.rstrip('\n') for line in open(filename)]
+
+        for line in lineList:
+            #Remove whitespace
+            line = re.sub(' +', '',line)
+            #Remove tabbing
+            line = re.sub(r'\t', '',line)
+            if line.startswith("u/") == True:
+                ##User: name provided
+                code_user(line.split('/')[1]) #Call code_user() and pass Redditor name
+                print()
+            elif line.startswith("r/") == True:
+                ##Subreddit: name provided
+                code_subreddit(line.split('/')[1]) #Call code_subreddit() and pass Subreddit name
+                print()
+            elif line.startswith("#") ==True:
+                #Skip line, as it is a comment
+                pass
+            else:
+                print("Line is not in the correct format.")
+                print("["+line+"]")
+                print()
+                print("For files, the username needs to be prefixed with 'u/' or 'r/'.")
+                print("This is only for file input, not for command line inputs.")
+    #If file does not exist
+    else:
+        print("File does not exist:")
+        print("["+basePath + "\\" + filename + "]")
+            
     return
 
 if __name__ == "__main__":

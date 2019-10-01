@@ -18,7 +18,7 @@ def code_subreddit(subredditName):
 
     #Count total number of posts
     print("Counting posts in r/"+subredditName+"...")
-    ttlNumPosts = countPosts(subredditName, 'u')
+    ttlNumPosts = countPosts(subredditName, 'r')
     print ("Total number of posts found: " + str(ttlNumPosts))
 
     #Ask user to limit the number of posts to scan/download based of last download

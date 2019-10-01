@@ -1,0 +1,6 @@
+#Examples of subreddits
+r/aww
+#Prefix spaces or tabs are ignored
+ r/pics
+#Examples of users
+u/reddit
