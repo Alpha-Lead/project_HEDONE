@@ -12,6 +12,9 @@ def printHelp():
     print("   Download all from list file")
     print("     - Flag: -f --file")
     print("     - Input: path to file")
+    print("     - Input file entries should be seperated by a newline.")
+    print("     - Input file entries shourd be prefixed with 'r/' or 'u/'.")
+    print("     - Input file lines begining with '#' will be skipped.")
     print("   Download from reddit user")
     print("     - Flag: -u --user")
     print("     - Input: Redditor username")
@@ -31,14 +34,13 @@ def initReddit():
 ##Count number of posts
 def countPosts(inputName, inputType):
     count = -1
-
     reddit = initReddit()
 
     if inputType == 'u':
         user = reddit.redditor(inputName)
         listPost = list(user.submissions.new(limit=None))
         count = len(listPost)
-    elif inputType == 'r': ### YET TO GET WORKING ###
+    elif inputType == 'r':
         subreddit = reddit.subreddit(inputName)
         listPost = list(subreddit.new(limit=None))
         count = len(listPost)
@@ -58,7 +60,12 @@ def simpleString(inputString):
 
 #Function to remove successive whitespace
 def simpleSpace(inputString):
+    #Remove whitespace
     inputString = re.sub(' +', ' ',inputString)
+    #Remove tabbing
+    inputString = re.sub(r'\t', '',inputString)
+    #Limit to 100 characters
+    inputString = (inputString[:100] + ' ... ') if len(inputString) > 100 else inputString
     return inputString
     
 #Function to download file to path
@@ -73,6 +80,8 @@ def downloadFile(filepath, filename, filetype, url):
             print("File downloaded: " + filename)
         except Exception as e:
             print('EXCEPTION_THROWN - SECTION_download')
+            print("Url: " + url)
+            print("Filename: " + filepath+filename+filetype)
             print(e)
 
 
