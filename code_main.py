@@ -5,6 +5,7 @@ import getopt #To handle argument parsing
 
 from code_user import code_user #To operate on users
 from code_subreddit import code_subreddit #To operate on subreddits
+from code_common import printHelp #Print out help script
 
 ##Process arguments
 def main(argv):
@@ -32,6 +33,9 @@ def main(argv):
         elif opt in ("-s", "/s", "--subreddit"):
             ##Subreddit: name provided
             code_subreddit(arg)
+        elif opt in ("-h", "--help"):
+            printHelp()
+            sys.exit(0)
     return
 
 def alternate():
@@ -50,20 +54,7 @@ def alternate():
             print("Exiting on user request...")
             sys.exit(0)
         elif choice in ("h", "help"):
-            print("Python script to download all media from a reddit user or subreddit.")
-            print("1) Command line use:")
-            print("   >> code_main.py <flag> <input>")
-            print("   Download all from list file")
-            print("     - Flag: -f --file")
-            print("     - Input: path to file")
-            print("   Download from reddit user")
-            print("     - Flag: -u --user")
-            print("     - Input: Redditor username")
-            print("   Download all from list file")
-            print("     - Flag: -r --subreddit")
-            print("     - Input: Subreddit name")
-            print("2) Interactive use:")
-            print("   >> code_main.py")
+            printHelp()
             sys.exit(0)
         else:
             print("Selection ("+choice+") is invalid.")

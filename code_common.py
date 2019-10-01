@@ -4,6 +4,24 @@ import os #Used to interact with filesystem
 import urllib.request #Library to download image
 from credentials import * #Import reddit app access credentials
 
+##Function to print 'Help' script
+def printHelp():
+    print("Python script to download all media from a reddit user or subreddit.")
+    print("1) Command line use:")
+    print("   >> code_main.py <flag> <input>")
+    print("   Download all from list file")
+    print("     - Flag: -f --file")
+    print("     - Input: path to file")
+    print("   Download from reddit user")
+    print("     - Flag: -u --user")
+    print("     - Input: Redditor username")
+    print("   Download all from list file")
+    print("     - Flag: -r --subreddit")
+    print("     - Input: Subreddit name")
+    print("2) Interactive use:")
+    print("   >> code_main.py")
+    return
+
 ##Function to initialise PRAW instance
 def initReddit():
     #Credential information sourced from file
