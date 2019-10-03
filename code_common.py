@@ -109,3 +109,19 @@ def buildOutputDir(holderFolder, ouputFolder):
         os.mkdir(filepath)
 
     return filepath
+
+#Function to dexport Pandas DataFrame to CSV file
+def exportDFtoCSV(filepath, filename, dataFrame):
+    #Check if file already exists
+    if os.path.isfile(filepath+"\\"+filename+".csv"):
+            print("Cancelled CSV export. File exists: " + filepath + "\\" + filename + ".csv")
+    else:
+        #Download file from url and name
+        try:
+            dataFrame.to_csv (filepath + "\\" + filename + ".csv", index = None, header=True) 
+            print("CSV Created.")
+        except Exception as e:
+            print('EXCEPTION_THROWN - SECTION_export')
+            print("FilePath: " + filepath)
+            print("Filename: " + filename + ".csv")
+            print(e)

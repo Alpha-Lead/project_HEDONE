@@ -6,7 +6,7 @@ import pandas #To work with dataframes
 import os #Used to get directory fro python script
 
 #Custom function import
-from code_common import initReddit, countPosts, simpleString, simpleSpace, downloadFile, buildOutputDir 
+from code_common import initReddit, countPosts, simpleString, simpleSpace, downloadFile, buildOutputDir, exportDFtoCSV
 
 def code_user(redditorName):
     #########################################################################
@@ -76,6 +76,21 @@ def code_user(redditorName):
     print(str(len(foundDF.index)) + " valid media entries found.")
 
     #########################################################################
+    ##                       Export files to CSV                           ##
+    #########################################################################
+    #Ask if user want's to download found files
+    while True:
+        answer = input('Do you want to contiue to export results to csv? [y/n]:')
+        if answer.lower().startswith("y"):
+            print("Beginning CSV export...")
+            outputFilePath = buildOutputDir('output files', redditorName)
+            #Export dataframe 'postsDF' to a '.csv' file called 'posts' under redditor output directory,
+            exportDFtoCSV(outputFilePath, "posts", postsDF)
+        elif answer.lower().startswith("n"):
+            break
+        
+
+    #########################################################################
     ##                          Download Images                            ##
     #########################################################################
 
@@ -88,13 +103,14 @@ def code_user(redditorName):
                 print("Exiting on user request...")
                 exit()
 
-    outputFilePath = buildOutputDir('output files', redditorName)
+    #Build filepath if it does not exist
+    if outputFilePath is None:
+        outputFilePath = buildOutputDir('output files', redditorName)
 
+    #Run download script
     for i in range(0, len(foundDF.index)):
         downloadFile(
                     outputFilePath, #Filepath
                     foundDF.at[i, 'filename'], #Filename
                     foundDF.at[i, 'extension'], #File extension
                     foundDF.at[i, 'url']) #File location URL
-
-
