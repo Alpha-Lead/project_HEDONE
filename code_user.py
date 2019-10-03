@@ -86,6 +86,7 @@ def code_user(redditorName):
             outputFilePath = buildOutputDir('output files', redditorName)
             #Export dataframe 'postsDF' to a '.csv' file called 'posts' under redditor output directory,
             exportDFtoCSV(outputFilePath, "posts", postsDF)
+            break
         elif answer.lower().startswith("n"):
             break
         
@@ -103,9 +104,8 @@ def code_user(redditorName):
                 print("Exiting on user request...")
                 exit()
 
-    #Build filepath if it does not exist
-    if outputFilePath is None:
-        outputFilePath = buildOutputDir('output files', redditorName)
+    #Build filepath
+    outputFilePath = buildOutputDir('output files', redditorName)
 
     #Run download script
     for i in range(0, len(foundDF.index)):

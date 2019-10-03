@@ -74,6 +74,20 @@ def code_subreddit(subredditName):
     #print(postsDF.loc[0]) #Row 1
     print(str(len(foundDF.index))  + " valid media entries found.")
 
+    #########################################################################
+    ##                       Export files to CSV                           ##
+    #########################################################################
+    #Ask if user want's to download found files
+    while True:
+        answer = input('Do you want to contiue to export results to csv? [y/n]:')
+        if answer.lower().startswith("y"):
+            print("Beginning CSV export...")
+            outputFilePath = buildOutputDir('output files', subredditName)
+            #Export dataframe 'postsDF' to a '.csv' file called 'posts' under redditor output directory,
+            exportDFtoCSV(outputFilePath, "posts", postsDF)
+            break
+        elif answer.lower().startswith("n"):
+            break
 
     #########################################################################
     ##                          Download Images                            ##
@@ -87,9 +101,11 @@ def code_subreddit(subredditName):
         elif answer.lower().startswith("n"):
                 print("Exiting on user request...")
                 exit()
-
+   
+    #Build filepath
     outputFilePath = buildOutputDir('output files', subredditName)
 
+    #Run download script
     for i in range(0, len(foundDF.index)):
         downloadFile(
                     outputFilePath, #Filepath
