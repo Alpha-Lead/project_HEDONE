@@ -6,7 +6,7 @@ import datetime  #Work with Dates
 import pandas #To work with dataframes
 
 #Custom function import
-from code_common import initReddit, countPosts, simpleString, simpleSpace, downloadFile, buildOutputDir 
+from code_common import initReddit, countPosts, simpleString, simpleSpace, downloadFile, buildOutputDir, exportDFtoCSV
 
 def code_subreddit(subredditName):
     #########################################################################
