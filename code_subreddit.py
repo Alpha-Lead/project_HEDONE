@@ -6,7 +6,7 @@ import datetime  #Work with Dates
 import pandas #To work with dataframes
 
 #Custom function import
-from code_common import initReddit, countPosts, simpleString, simpleSpace, downloadFile, buildOutputDir 
+from code_common import initReddit, countPosts, simpleString, simpleSpace, downloadFile, buildOutputDir, exportDFtoCSV, testUrlCompadible
 
 def code_subreddit(subredditName):
     #########################################################################
@@ -55,18 +55,28 @@ def code_subreddit(subredditName):
             "url": submission.url}, ignore_index=True)
 
     #Extract all the ones with valid media for a url
-    extList = ['.jpg', '.png', '.gif', '.mp4', '.jpeg']
+
+    #Refine lists with valid media urls, or where the url can be transformed into a valid media url
     foundDF = pandas.DataFrame({"filename":[], "url":[], "extension": []})
+    rejectedDF = pandas.DataFrame({"filename":[], "url":[]})
     for i in range(0, len(postsDF.index)):
-        if (postsDF.at[i, 'url']).endswith(tuple(extList)):
-                #Add title, extension, and url to dataframe
-                foundDF = foundDF.append({
-                    "filename": str(ttlNumPosts-i)+' - '+
-                                    simpleSpace(simpleString(postsDF.at[i, 'title'])).strip(),
-                    #Filename: <index> - <title -padding (ASCII encoded)>
-                    "url": postsDF.at[i, 'url'],
-                    "extension": '.'+postsDF.at[i, 'url'].split('.')[-1]
-                }, ignore_index=True)
+        test, varStr = testUrlCompadible(postsDF.at[i, 'url'])
+        if test == True:
+            #Add title, extension, and url to dataframe
+            foundDF = foundDF.append({
+                "filename": str(ttlNumPosts-i)+' - '+
+                                simpleSpace(simpleString(postsDF.at[i, 'title'])).strip(),
+                #Filename: <index> - <title -padding (ASCII encoded)>
+                "url": varStr,
+                "extension": '.'+varStr.split('.')[-1]
+            }, ignore_index=True)
+        else:
+            #Add to exception list
+            rejectedDF = rejectedDF.append({
+                "filename": str(ttlNumPosts-i)+' - '+
+                                simpleSpace(simpleString(postsDF.at[i, 'title'])).strip(),
+                #Filename: <index> - <title -padding (ASCII encoded)>
+                "url": varStr}, ignore_index=True)
 
     #Print dataframe contents for debuging
     #print(foundDF)
@@ -74,6 +84,22 @@ def code_subreddit(subredditName):
     #print(postsDF.loc[0]) #Row 1
     print(str(len(foundDF.index))  + " valid media entries found.")
 
+    #########################################################################
+    ##                       Export files to CSV                           ##
+    #########################################################################
+    #Ask if user want's to download found files
+    while True:
+        answer = input('Do you want to contiue to export results to csv? [y/n]:')
+        if answer.lower().startswith("y"):
+            print("Beginning CSV export...")
+            outputFilePath = buildOutputDir('output files', subredditName)
+            #Export dataframe 'postsDF' to a '.csv' file called 'posts' under redditor output directory,
+            exportDFtoCSV(outputFilePath, "posts", postsDF)
+            exportDFtoCSV(outputFilePath, "media", foundDF)
+            exportDFtoCSV(outputFilePath, "rejected", rejectedDF)
+            break
+        elif answer.lower().startswith("n"):
+            break
 
     #########################################################################
     ##                          Download Images                            ##
@@ -87,9 +113,11 @@ def code_subreddit(subredditName):
         elif answer.lower().startswith("n"):
                 print("Exiting on user request...")
                 exit()
-
+   
+    #Build filepath
     outputFilePath = buildOutputDir('output files', subredditName)
 
+    #Run download script
     for i in range(0, len(foundDF.index)):
         downloadFile(
                     outputFilePath, #Filepath

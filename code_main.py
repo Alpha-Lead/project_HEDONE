@@ -42,7 +42,7 @@ def main(argv):
 def alternate():
     ##Menu if arguments are not given
     while True:
-        choice = input("Would you like to download from: a user (u/), or a subreddit (r/)?")
+        choice = input("Would you like to download from: a user (u/), or a subreddit (r/)? ")
         if choice in ("u", "user", "u/"):
             #Ask user for input of target name
             redditorName = input("Reddit user: u/")
