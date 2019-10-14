@@ -4,6 +4,12 @@
 
 For python 3 and above.
 
+Still developing futher features:
+* v.redd.it/ (Reddit MPEG DASH videos)
+* imgur.com/ (non-direct image/video links)
+* Twitter linked posts
+* YouTube linked posts
+
 ### User Guide: ###
 
 Hi, thanks for taking an interest in my code.
@@ -111,3 +117,14 @@ Here is the template:
 
 
 The ClientId, and ClientSecret can be aquired by following the PRAW guide [here](https://praw.readthedocs.io/en/latest/getting_started/authentication.html#oauth)
+
+
+### Dependancies ###
+
+Download and install the following dependancis: (I recommend using `pip install` )
+
+* urllib.request
+* bs4 (BeautifulSoup)
+* praw
+* pandas
+* getopt

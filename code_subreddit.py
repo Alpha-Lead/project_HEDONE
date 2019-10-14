@@ -8,7 +8,7 @@ import pandas #To work with dataframes
 #Custom function import
 from code_common import initReddit, countPosts, simpleString, simpleSpace, downloadFile, buildOutputDir, exportDFtoCSV, testUrlCompadible
 
-def code_subreddit(subredditName):
+def code_subreddit(subredditName, csvQuery):
     #########################################################################
     ##                      Pull data from Reddit                          ##
     #########################################################################
@@ -87,19 +87,14 @@ def code_subreddit(subredditName):
     #########################################################################
     ##                       Export files to CSV                           ##
     #########################################################################
-    #Ask if user want's to download found files
-    while True:
-        answer = input('Do you want to contiue to export results to csv? [y/n]:')
-        if answer.lower().startswith("y"):
-            print("Beginning CSV export...")
-            outputFilePath = buildOutputDir('output files', subredditName)
-            #Export dataframe 'postsDF' to a '.csv' file called 'posts' under redditor output directory,
-            exportDFtoCSV(outputFilePath, "posts", postsDF)
-            exportDFtoCSV(outputFilePath, "media", foundDF)
-            exportDFtoCSV(outputFilePath, "rejected", rejectedDF)
-            break
-        elif answer.lower().startswith("n"):
-            break
+    #Ask if user want's to export post lists
+    if csvQuery == True:
+        print("Beginning CSV export...")
+        outputFilePath = buildOutputDir('output files', subredditName)
+        #Export dataframe 'postsDF' to a '.csv' file called 'posts' under redditor output directory,
+        exportDFtoCSV(outputFilePath, "posts", postsDF)
+        exportDFtoCSV(outputFilePath, "media", foundDF)
+        exportDFtoCSV(outputFilePath, "rejected", rejectedDF)
 
     #########################################################################
     ##                          Download Images                            ##
