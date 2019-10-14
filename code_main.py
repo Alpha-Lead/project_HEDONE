@@ -29,7 +29,7 @@ def main(argv):
     export = False
 
     for opt, arg in optns:
-        if opt in ("-c", "--csv")
+        if opt in ("-c", "--csv"):
             #Save results as a CSV file
             export = True
         elif opt in ("-f", "/f", "--file"):
@@ -55,18 +55,18 @@ def alternate():
             redditorName = input("Reddit user: u/")
             #Query if user wants to download results as a csv
             csv = input('Do you want to export results to csv? [y/n]:')
-            if answer.lower().startswith("y"):
+            if csv.lower().startswith("y"):
                 code_user(redditorName, True)
-            elif answer.lower().startswith("n"):
+            elif csv.lower().startswith("n"):
                 code_user(redditorName, False)
         elif choice in ("r", "subreddit", "r/"):
             #Ask user for input of target name
             subredditName = input("Reddit thread: r/")
             #Query if user wants to download results as a csv
             csv = input('Do you want to export results to csv? [y/n]:')
-            if answer.lower().startswith("y"):
+            if csv.lower().startswith("y"):
                 code_subreddit(subredditName, True)
-            elif answer.lower().startswith("n"):
+            elif csv.lower().startswith("n"):
                 code_subreddit(subredditName, False)
         elif choice in ("h", "help"):
             printHelp()
