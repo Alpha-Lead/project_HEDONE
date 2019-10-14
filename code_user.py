@@ -8,7 +8,7 @@ import os #Used to get directory fro python script
 #Custom function import
 from code_common import initReddit, countPosts, simpleString, simpleSpace, downloadFile, buildOutputDir, exportDFtoCSV, testUrlCompadible
 
-def code_user(redditorName):
+def code_user(redditorName, csvQuery):
     #########################################################################
     ##                      Pull data from Reddit                          ##
     #########################################################################
@@ -83,22 +83,19 @@ def code_user(redditorName):
     #print(postsDF.loc[0]) #Row 1
     print(str(len(foundDF.index)) + " valid media entries found.")
 
+
     #########################################################################
     ##                       Export files to CSV                           ##
     #########################################################################
-    #Ask if user want's to download found files
-    while True:
-        answer = input('Do you want to contiue to export results to csv? [y/n]:')
-        if answer.lower().startswith("y"):
-            print("Beginning CSV export...")
-            outputFilePath = buildOutputDir('output files', redditorName)
-            #Export dataframe 'postsDF' to a '.csv' file called 'posts' under redditor output directory,
-            exportDFtoCSV(outputFilePath, "posts", postsDF)
-            exportDFtoCSV(outputFilePath, "media", foundDF)
-            exportDFtoCSV(outputFilePath, "rejected", rejectedDF)
-            break
-        elif answer.lower().startswith("n"):
-            break
+
+    #Ask if user want's to export post lists
+    if csvQuery == True:
+        print("Beginning CSV export...")
+        outputFilePath = buildOutputDir('output files', redditorName)
+        #Export dataframe 'postsDF' to a '.csv' file called 'posts' under redditor output directory,
+        exportDFtoCSV(outputFilePath, "posts", postsDF)
+        exportDFtoCSV(outputFilePath, "media", foundDF)
+        exportDFtoCSV(outputFilePath, "rejected", rejectedDF)
         
 
     #########################################################################
