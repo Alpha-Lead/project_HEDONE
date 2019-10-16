@@ -1,6 +1,6 @@
-#Examples of subreddits
-r/aww
+#Examples of subreddits (with 'from' scan condition)
+r/aww,800
 #Prefix spaces or tabs are ignored
- r/pics
+ r/pics, 123
 #Examples of users
 u/reddit

@@ -65,19 +65,35 @@ To enter interactive mode:
 `code_main.py`
 
 
-To download media from user 'redditor':
+To download media from user 'redditor'
 
 `code_main.py -u redditor`
 
 
 To download media from subreddit 'subreddit'
 
-`code_main.py -u subreddit`
+`code_main.py -s subreddit`
 
 
 To download media from file 'listOfTargets.txt'
 
 `code_main.py -f listOfTargets`
+
+
+To download media from user 'redditor' and export media posts to csv file
+
+`code_main.py -c -u redditor`
+
+
+To download all found media from subreddit 'subreddit'
+
+`code_main.py -a -s listOfTargets`
+
+
+To download media from subreddit 'subreddit' after post 123
+
+`code_main.py -n 123 -s listOfTargets`
+
 
 
 ### Guide for using file input method: ###

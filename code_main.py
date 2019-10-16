@@ -12,7 +12,7 @@ from code_common import printHelp #Print out help script
 ##Process arguments
 def main(argv):
     try:
-        optns, args = getopt.getopt(argv, "f:u:s:h:c", ["file=", "user=", "subreddit=", "help=", "csv"])
+        optns, args = getopt.getopt(argv, "f:u:s:h:n:ca", ["file=", "user=", "subreddit=", "help=", "from", "csv", "all"])
     except getopt.GetoptError:
         print("EXCEPTION_THROWN - SECTION_arguments")
         print("Invalid arguments.")
@@ -24,23 +24,32 @@ def main(argv):
         print("-s --subreddit | Input subreddit name")
         print("               | ")
         print("-c --csv       | Export results to csv")
+        print("-a --all       | Download all results")
+        print("-n --from      | Specify last downloaded number")
         sys.exit(1)
     
     export = False
+    lastNum = -1
 
     for opt, arg in optns:
-        if opt in ("-c", "--csv")
+        if opt in ("-c", "--csv"):
             #Save results as a CSV file
             export = True
+        elif opt in ("-a", "--all"):
+            #Download all results
+            lastNum = 0
+        elif opt in ("-n", "--from"):
+            #Specify the last downloaded file number
+            lastNum = int(arg)
         elif opt in ("-f", "/f", "--file"):
             ##Read file for inputs
             processFile(arg, export)
         elif opt in ("-u", "/u", "--user"):
             ##User: name provided
-            code_user(arg, export) #Call code_user() and pass Redditor name
+            code_user(arg, export, lastNum) #Call code_user() and pass Redditor name
         elif opt in ("-s", "/s", "--subreddit"):
             ##Subreddit: name provided
-            code_subreddit(arg, export) #Call code_subreddit() and pass Subreddit name
+            code_subreddit(arg, export, lastNum) #Call code_subreddit() and pass Subreddit name
         elif opt in ("-h", "--help"):
             printHelp()
             sys.exit(0)
@@ -55,19 +64,19 @@ def alternate():
             redditorName = input("Reddit user: u/")
             #Query if user wants to download results as a csv
             csv = input('Do you want to export results to csv? [y/n]:')
-            if answer.lower().startswith("y"):
-                code_user(redditorName, True)
-            elif answer.lower().startswith("n"):
-                code_user(redditorName, False)
+            if csv.lower().startswith("y"):
+                code_user(redditorName, True, -1)
+            elif csv.lower().startswith("n"):
+                code_user(redditorName, False, -1)
         elif choice in ("r", "subreddit", "r/"):
             #Ask user for input of target name
             subredditName = input("Reddit thread: r/")
             #Query if user wants to download results as a csv
             csv = input('Do you want to export results to csv? [y/n]:')
-            if answer.lower().startswith("y"):
-                code_subreddit(subredditName, True)
-            elif answer.lower().startswith("n"):
-                code_subreddit(subredditName, False)
+            if csv.lower().startswith("y"):
+                code_subreddit(subredditName, True, -1)
+            elif csv.lower().startswith("n"):
+                code_subreddit(subredditName, False, -1)
         elif choice in ("h", "help"):
             printHelp()
             sys.exit(0)
@@ -88,19 +97,27 @@ def processFile(filename, csv):
         print("Reading from file " + filename)
         lineList = list()
         lineList = [line.rstrip('\n') for line in open(filename)]
+        lastNum = -1
 
         for line in lineList:
             #Remove whitespace
             line = re.sub(' +', '',line)
             #Remove tabbing
             line = re.sub(r'\t', '',line)
+            #Split on comma
+            if len(line.split(',')) > 1:
+                lineEnd = line.split(',')[-1]
+                lastNum = int(lineEnd)
+                line = line[:-(len(lineEnd)+1)]
+                #print("[" + line + ", " + str(lastNum) + "]")
+
             if line.startswith("u/") == True:
                 ##User: name provided
-                code_user(line.split('/')[1], csv) #Call code_user() and pass Redditor name
+                code_user(line.split('/')[1], csv, lastNum) #Call code_user() and pass Redditor name
                 print()
             elif line.startswith("r/") == True:
                 ##Subreddit: name provided
-                code_subreddit(line.split('/')[1], csv) #Call code_subreddit() and pass Subreddit name
+                code_subreddit(line.split('/')[1], csv, lastNum) #Call code_subreddit() and pass Subreddit name
                 print()
             elif line.startswith("#") ==True:
                 #Skip line, as it is a comment

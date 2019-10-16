@@ -8,7 +8,7 @@ import pandas #To work with dataframes
 #Custom function import
 from code_common import initReddit, countPosts, simpleString, simpleSpace, downloadFile, buildOutputDir, exportDFtoCSV, testUrlCompadible
 
-def code_subreddit(subredditName, csvQuery):
+def code_subreddit(subredditName, csvQuery, lastNum):
     #########################################################################
     ##                      Pull data from Reddit                          ##
     #########################################################################
@@ -22,14 +22,17 @@ def code_subreddit(subredditName, csvQuery):
     print ("Total number of posts found: " + str(ttlNumPosts))
 
     #Ask user to limit the number of posts to scan/download based of last download
-    while True: #Loop until a valid number is given
-        lastPostNum = input("Enter number of last downloaded post: ")
-        if( lastPostNum.isdigit() ):
-            #Set the search limit (reverse chronological due to 'new' ordering)
-            searchLimit = ttlNumPosts - int(lastPostNum)
-            break
-        else:
-            print("Input is not an integer, or <0.\nTry again.")
+    if (lastNum < 0):
+        while True: #Loop until a valid number is given
+            lastPostNum = input("Enter number of last downloaded post: ")
+            if( lastPostNum.isdigit() ):
+                #Set the search limit (reverse chronological due to 'new' ordering)
+                searchLimit = ttlNumPosts - int(lastPostNum)
+                break
+            else:
+                print("Input is not an integer, or <0.\nTry again.")
+    else:
+        searchLimit = ttlNumPosts - int(lastNum)
 
     print("Scanning contents of r/"+subredditName+"...")
     #Build object for search - SUBREDDIT
@@ -107,7 +110,7 @@ def code_subreddit(subredditName, csvQuery):
             break
         elif answer.lower().startswith("n"):
                 print("Exiting on user request...")
-                exit()
+                return
    
     #Build filepath
     outputFilePath = buildOutputDir('output files', subredditName)
