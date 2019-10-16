@@ -109,7 +109,7 @@ def processFile(filename, csv):
                 lineEnd = line.split(',')[-1]
                 lastNum = int(lineEnd)
                 line = line[:-(len(lineEnd)+1)]
-                print("[" + line + ", " + str(lastNum) + "]")
+                #print("[" + line + ", " + str(lastNum) + "]")
 
             if line.startswith("u/") == True:
                 ##User: name provided
