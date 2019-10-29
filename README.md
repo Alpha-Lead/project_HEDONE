@@ -4,7 +4,7 @@
 
 For python 3 and above.
 
-Still developing futher features:
+Still developing future features:
 * v.redd.it/ (Reddit MPEG DASH videos)
 * imgur.com/ (non-direct image/video links)
 * Twitter linked posts
